@@ -13,6 +13,7 @@
 		B5CB1FBE269C5DD200C7C0D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CB1FBC269C5DD200C7C0D0 /* Main.storyboard */; };
 		B5CB1FC0269C5DD300C7C0D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CB1FBF269C5DD300C7C0D0 /* Assets.xcassets */; };
 		B5CB1FC3269C5DD300C7C0D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5CB1FC1269C5DD300C7C0D0 /* LaunchScreen.storyboard */; };
+		B5CB1FCB269C763700C7C0D0 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB1FCA269C763700C7C0D0 /* FloatingActionButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B5CB1FBF269C5DD300C7C0D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5CB1FC2269C5DD300C7C0D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5CB1FC4269C5DD300C7C0D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5CB1FCA269C763700C7C0D0 /* FloatingActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				B5CB1FBF269C5DD300C7C0D0 /* Assets.xcassets */,
 				B5CB1FC1269C5DD300C7C0D0 /* LaunchScreen.storyboard */,
 				B5CB1FC4269C5DD300C7C0D0 /* Info.plist */,
+				B5CB1FCA269C763700C7C0D0 /* FloatingActionButton.swift */,
 			);
 			path = FloatingButton;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 				B5CB1FBB269C5DD200C7C0D0 /* ViewController.swift in Sources */,
 				B5CB1FB7269C5DD200C7C0D0 /* AppDelegate.swift in Sources */,
 				B5CB1FB9269C5DD200C7C0D0 /* SceneDelegate.swift in Sources */,
+				B5CB1FCB269C763700C7C0D0 /* FloatingActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
