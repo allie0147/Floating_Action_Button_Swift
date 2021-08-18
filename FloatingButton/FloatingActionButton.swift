@@ -7,38 +7,20 @@
 
 import UIKit
 
-enum FABType {
-    case `default`
-    case custom
-}
-
 class FloatingActionButton: UIButton {
-    private var fabType: FABType = .default
     /// 터치 했을 때 color
     private var accentColor: UIColor?
     /// 터치 안했을 떄 color
     private var baseColor: UIColor?
     /// 아이콘
     private var buttonIcon: UIImage?
-    /// 터치 했을 때 dim 효과
-//    private var maskLayer: CALayer {
-//        let mask = CALayer()
-//        mask.frame = self.bounds
-//        mask.backgroundColor = isSelected ?
-//            accentColor?.darker()?.withAlphaComponent(0.3).cgColor
-//            : baseColor?.darker()?.withAlphaComponent(0.3).cgColor
-//        return mask
-//    }
 
-    /// 버튼 색 변경 유무
-    private var changeBackground: Bool = false
-
+    /// 터치 했을 때 ripple 효과
+    private var rippleEnabled: Bool = false
     /// 선택된 효과 적용
     override var isSelected: Bool {
         didSet {
-            if changeBackground {
-                self.layer.backgroundColor = isSelected ? accentColor?.cgColor : baseColor?.cgColor
-            }
+            self.layer.backgroundColor = isSelected ? accentColor?.cgColor : baseColor?.cgColor
         }
     }
 
@@ -52,22 +34,15 @@ class FloatingActionButton: UIButton {
 
     /// FAB init
     convenience init(
-        fabType: FABType = .default,
-        changeColor: Bool = false,
         baseColor: UIColor = .systemPink,
         accentColor: UIColor? = .clear,
         borderColor: UIColor? = .clear,
         borderWidth: CGFloat? = 0.0,
-        icon: UIImage? = UIImage(systemName: "plus",
-                                 withConfiguration: UIImage.SymbolConfiguration(pointSize: 32, weight: .medium))
+        icon: UIImage? = UIImage(named: "mac-os-logo"),
+        rippleEffect: Bool? = false,
+        completion: @escaping UIControlTargetClosure
     ) {
         self.init(type: .custom)
-        // -TODO: fab type에 따라서 분기
-        // do something()..
-        
-        
-        // background change Y/N
-        self.changeBackground = changeColor
         // colors
         self.baseColor = baseColor
         self.accentColor = accentColor
@@ -76,39 +51,71 @@ class FloatingActionButton: UIButton {
         self.layer.borderColor = borderColor?.cgColor
         // icon
         self.buttonIcon = icon
-//        self.layer.borderWidth = borderWidth.value(or: 0.0)
-        addButtonLayout()
+        self.rippleEnabled = rippleEffect ?? false
+        self.addAction(for: .touchUpInside, closure: completion)
     }
-
-    // MARK: - Layout
-    /// 버튼 레이아웃
-    private func addButtonLayout() {
-        self.setImage(buttonIcon, for: .normal)
-        self.clipsToBounds = true
-        self.layer.masksToBounds = true
+    
+    override func layoutSubviews() {
+        // image 왜 안보이지..?
+//        self.imageView?.image = buttonIcon
+//        self.setImage(buttonIcon, for: .normal)
         // Shadow
+        self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOpacity = 0.3
         self.layer.shadowPath = UIBezierPath(
             roundedRect: CGRect(
                 x: 0,
                 y: 5,
-                width: 60 + 5,
-                height: 60
+                width: self.frame.width + 5,
+                height: self.frame.height
             ),
             cornerRadius: 30
         ).cgPath
         self.layer.shouldRasterize = true // cache the rendered shadow
         // Corner radius
         self.layer.cornerRadius = 30
-        // add target
-        self.addTarget(self, action: #selector(didTapFAB), for: .touchUpInside)
+    }
+}
+// MARK: -Extension: UIControl
+extension UIControl {
+    public typealias UIControlTargetClosure = (UIControl) -> ()
+
+    /// closure 저장 WrapperClass
+    private class UIControlClosureWrapper: NSObject {
+        let closure: UIControlTargetClosure
+        init(_ closure: @escaping UIControlTargetClosure) {
+            self.closure = closure
+        }
     }
 
-    @objc
-    private func didTapFAB() {
-        print("tab!")
-//        let alert = UIAlertController(title: "Add Something", message: "Floating Button Tapped", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
-//        present(alert, animated: true)
+    private struct AssociatedKeys {
+        static var targetClosure = "targetClosure" // 값 저장용 key
+    }
+
+    private var targetClosure: UIControlTargetClosure? {
+        get {
+            guard let closureWrapper = objc_getAssociatedObject(self, &AssociatedKeys.targetClosure) as? UIControlClosureWrapper else {
+                return nil
+            }
+            return closureWrapper.closure
+        }
+
+        set(newValue) {
+            guard let newValue = newValue else { return }
+            objc_setAssociatedObject(self, &AssociatedKeys.targetClosure, UIControlClosureWrapper(newValue), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    /// 저장된 closure를 가져옴
+    @objc func closureAction() {
+        guard let targetClosure = targetClosure else { return }
+        targetClosure(self)
+        self.isSelected = !self.isSelected
+    }
+
+    /// action
+    public func addAction(for event: UIControl.Event, closure: @escaping UIControlTargetClosure) {
+        targetClosure = closure
+        addTarget(self, action: #selector(UIControl.closureAction), for: event)
     }
 }

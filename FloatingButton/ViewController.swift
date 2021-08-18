@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private let floatingButton: FloatingActionButton
+    private var floatingButton: FloatingActionButton = FloatingActionButton()
 
 //    private let floatingButton: UIButton = {
 //        let button = UIButton(
@@ -43,18 +43,19 @@ class ViewController: UIViewController {
 //        button.layer.cornerRadius = 30
 //        return button
 //    }()
-    required init?(coder: NSCoder) {
-        floatingButton = FloatingActionButton(baseColor: .cyan)
-        super.init(coder: coder)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        floatingButton = FloatingActionButton(baseColor: .cyan, accentColor: .systemPink) { button in
+            let alert = UIAlertController(title: "Add Something", message: "Floating Button Tapped", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+            self.present(alert, animated: true)
+        }
         view.addSubview(floatingButton)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        print("layout!!")
         floatingButton.frame = CGRect(
             x: view.frame.size.width - 60 - 15, // view.width - button width - little margin
             y: view.frame.size.height - 60 - view.safeAreaInsets.bottom, // view.height - button height - safeArea.bottom
