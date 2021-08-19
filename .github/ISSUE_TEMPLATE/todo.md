@@ -1,2 +1,14 @@
+---
+name: Todo
+about: Todo list
+title: "[TODO]"
+labels: todo
+assignees: allie0147
+
+---
+
 **TODO**
-- [ ] # tag : "todo something"
+yyyy.MM.dd   
+[ ] :# tag "todo something"
+[ ] :# tag "todo something"
+[ ] :# tag "todo something"
