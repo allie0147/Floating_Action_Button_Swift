@@ -6,8 +6,8 @@ labels: todo
 assignees: allie0147
 ---
 
-yyyy.MM.dd
-
-- [ ] commit hash "todo something"
-- [ ] commit hash "todo something"
+2021.08.19
+---
+- [ ]  commit SHA Raw reference 
+- [ ]  commit SHA Raw reference 
 
