@@ -6,7 +6,7 @@ labels: todo
 assignees: allie0147
 ---
 
-2021.08.19
+yyyy.MM.dd
 ---
 - [ ]  commit SHA Raw reference 
 - [ ]  commit SHA Raw reference 
