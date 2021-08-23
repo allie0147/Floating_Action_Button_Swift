@@ -20,7 +20,7 @@ class FloatingActionButton: UIButton {
     /// 선택된 효과 적용
     override var isSelected: Bool {
         didSet {
-            self.layer.backgroundColor = isSelected ? accentColor?.cgColor : baseColor?.cgColor
+            self.backgroundColor = isSelected ? accentColor : baseColor
         }
     }
 
@@ -38,43 +38,66 @@ class FloatingActionButton: UIButton {
         accentColor: UIColor? = .clear,
         borderColor: UIColor? = .clear,
         borderWidth: CGFloat? = 0.0,
-        icon: UIImage? = UIImage(named: "mac-os-logo"),
+        icon: UIImage? = UIImage(named: "plus"),
         rippleEffect: Bool? = false,
         completion: @escaping UIControlTargetClosure
     ) {
         self.init(type: .custom)
+        setButtonImage()
         // colors
         self.baseColor = baseColor
         self.accentColor = accentColor
-        self.layer.backgroundColor = baseColor.cgColor
+        self.backgroundColor = baseColor
         // border
         self.layer.borderColor = borderColor?.cgColor
         // icon
         self.buttonIcon = icon
         self.rippleEnabled = rippleEffect ?? false
+        // action
+        self.layer.masksToBounds = true
+//        setShadow()
         self.addAction(for: .touchUpInside, closure: completion)
     }
-    
-    override func layoutSubviews() {
-        // image 왜 안보이지..?
-//        self.imageView?.image = buttonIcon
-//        self.setImage(buttonIcon, for: .normal)
-        // Shadow
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOpacity = 0.3
-        self.layer.shadowPath = UIBezierPath(
-            roundedRect: CGRect(
-                x: 0,
-                y: 5,
-                width: self.frame.width + 5,
-                height: self.frame.height
-            ),
-            cornerRadius: 30
-        ).cgPath
-        self.layer.shouldRasterize = true // cache the rendered shadow
+
+    private func setButtonImage() {
+        self.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
+        self.imageView?.layer.masksToBounds = true
+        self.imageView?.contentMode = .scaleAspectFit
+        self.contentHorizontalAlignment = .center
+        self.semanticContentAttribute = .forceRightToLeft
+        self.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
+    }
+
+    func setShadow() {
         // Corner radius
         self.layer.cornerRadius = 30
+        // Shadow
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOpacity = 0.75
+        self.layer.shadowOffset = .zero
+        self.layer.shadowRadius = 5
+        self.layer.shadowPath = UIBezierPath(
+            roundedRect: self.bounds,
+            cornerRadius: self.layer.cornerRadius
+        ).cgPath
+//        self.layer.shadowPath = UIBezierPath(
+//            roundedRect: CGRect(
+//                x: 0,
+//                y: 5,
+//                width: self.frame.width + 5,
+//                height: self.frame.height
+//            ),
+//            cornerRadius: 30
+//        ).cgPath
+        self.layer.shouldRasterize = true // cache the rendered shadow
     }
+
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        if self.frame.width > 0 {
+//            setShadow()
+//        }
+//    }
 }
 // MARK: -Extension: UIControl
 extension UIControl {
