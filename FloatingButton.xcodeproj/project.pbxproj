@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7FE0576126D903510030C401 /* UIControl+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0576026D903510030C401 /* UIControl+Action.swift */; };
 		B5CB1FB7269C5DD200C7C0D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB1FB6269C5DD200C7C0D0 /* AppDelegate.swift */; };
 		B5CB1FB9269C5DD200C7C0D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB1FB8269C5DD200C7C0D0 /* SceneDelegate.swift */; };
 		B5CB1FBB269C5DD200C7C0D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CB1FBA269C5DD200C7C0D0 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7FE0576026D903510030C401 /* UIControl+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Action.swift"; sourceTree = "<group>"; };
 		B5CB1FB3269C5DD200C7C0D0 /* FloatingButton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FloatingButton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CB1FB6269C5DD200C7C0D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5CB1FB8269C5DD200C7C0D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				B5CB1FC1269C5DD300C7C0D0 /* LaunchScreen.storyboard */,
 				B5CB1FC4269C5DD300C7C0D0 /* Info.plist */,
 				B5CB1FCA269C763700C7C0D0 /* FloatingActionButton.swift */,
+				7FE0576026D903510030C401 /* UIControl+Action.swift */,
 			);
 			path = FloatingButton;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				B5CB1FB7269C5DD200C7C0D0 /* AppDelegate.swift in Sources */,
 				B5CB1FB9269C5DD200C7C0D0 /* SceneDelegate.swift in Sources */,
 				B5CB1FCB269C763700C7C0D0 /* FloatingActionButton.swift in Sources */,
+				7FE0576126D903510030C401 /* UIControl+Action.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
