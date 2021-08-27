@@ -34,6 +34,7 @@ class FloatingActionButton: UIButton {
 
     /// FAB init
     convenience init(
+        frame: CGRect,
         baseColor: UIColor = .systemPink,
         accentColor: UIColor? = .clear,
         borderColor: UIColor? = .clear,
@@ -42,7 +43,8 @@ class FloatingActionButton: UIButton {
         rippleEffect: Bool? = false,
         completion: @escaping UIControlTargetClosure
     ) {
-        self.init(type: .custom)
+        self.init(frame: frame)
+        // image
         setButtonImage()
         // colors
         self.baseColor = baseColor
@@ -53,9 +55,10 @@ class FloatingActionButton: UIButton {
         // icon
         self.buttonIcon = icon
         self.rippleEnabled = rippleEffect ?? false
-        // action
-        self.layer.masksToBounds = true
-//        setShadow()
+        // Corner radius
+        self.layer.cornerRadius = frame.height / 2
+        // shadow
+        setShadow()
         self.addAction(for: .touchUpInside, closure: completion)
     }
 
@@ -68,36 +71,18 @@ class FloatingActionButton: UIButton {
         self.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
     }
 
-    func setShadow() {
-        // Corner radius
-        self.layer.cornerRadius = 30
+    private func setShadow() {
         // Shadow
         self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOpacity = 0.75
+        self.layer.shadowOpacity = 0.45
         self.layer.shadowOffset = .zero
         self.layer.shadowRadius = 5
         self.layer.shadowPath = UIBezierPath(
             roundedRect: self.bounds,
             cornerRadius: self.layer.cornerRadius
         ).cgPath
-//        self.layer.shadowPath = UIBezierPath(
-//            roundedRect: CGRect(
-//                x: 0,
-//                y: 5,
-//                width: self.frame.width + 5,
-//                height: self.frame.height
-//            ),
-//            cornerRadius: 30
-//        ).cgPath
         self.layer.shouldRasterize = true // cache the rendered shadow
     }
-
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        if self.frame.width > 0 {
-//            setShadow()
-//        }
-//    }
 }
 // MARK: -Extension: UIControl
 extension UIControl {
