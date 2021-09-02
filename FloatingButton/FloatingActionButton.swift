@@ -14,12 +14,16 @@ class FloatingActionButton: UIButton {
     private var baseColor: UIColor?
     /// 아이콘
     private var buttonIcon: UIImage?
-    /// 터치 했을 때 ripple 효과
-    private var rippleEnabled: Bool = false
     /// 선택된 효과 적용
     override var isSelected: Bool {
         didSet {
-            self.backgroundColor = isSelected ? accentColor : baseColor
+            if isSelected {
+                self.backgroundColor = accentColor
+                rotateButton(angle: CGFloat.pi / 4)
+            } else {
+                self.backgroundColor = baseColor
+                rotateButton(angle: 0)
+            }
         }
     }
 
@@ -39,7 +43,6 @@ class FloatingActionButton: UIButton {
         borderColor: UIColor? = .clear,
         borderWidth: CGFloat? = 0.0,
         icon: UIImage? = UIImage(named: "plus"),
-        rippleEffect: Bool? = false,
         completion: @escaping UIControlTargetClosure
     ) {
         self.init(frame: frame)
@@ -53,12 +56,11 @@ class FloatingActionButton: UIButton {
         self.layer.borderColor = borderColor?.cgColor
         // icon
         self.buttonIcon = icon
-        self.rippleEnabled = rippleEffect ?? false
         // Corner radius
         self.layer.cornerRadius = frame.height / 2
         // shadow
         setShadow()
-        self.addAction(for: .touchUpInside, closure: completion)
+        addAction(for: .touchUpInside, closure: completion)
     }
 
     private func setButtonImage() {
@@ -81,5 +83,11 @@ class FloatingActionButton: UIButton {
             cornerRadius: self.layer.cornerRadius
         ).cgPath
         self.layer.shouldRasterize = true // cache the rendered shadow
+    }
+
+    private func rotateButton(angle: CGFloat) {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = CGAffineTransform(rotationAngle: angle)
+        }
     }
 }
