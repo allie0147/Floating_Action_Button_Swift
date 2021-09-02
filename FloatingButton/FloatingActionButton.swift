@@ -7,23 +7,24 @@
 
 import UIKit
 
+protocol FloatingActionButtonDelegate {
+    func didTapButton()
+}
+
 class FloatingActionButton: UIButton {
+    var delegate: FloatingActionButtonDelegate?
     /// 터치 했을 때 color
     private var accentColor: UIColor?
     /// 터치 안했을 떄 color
     private var baseColor: UIColor?
     /// 아이콘
     private var buttonIcon: UIImage?
-    /// 선택된 효과 적용
+    /// 버튼 rotate animation
+    var buttonRotate: Bool?
+
     override var isSelected: Bool {
         didSet {
-            if isSelected {
-                self.backgroundColor = accentColor
-                rotateButton(angle: CGFloat.pi / 4)
-            } else {
-                self.backgroundColor = baseColor
-                rotateButton(angle: 0)
-            }
+            delegate?.didTapButton()
         }
     }
 
@@ -43,9 +44,11 @@ class FloatingActionButton: UIButton {
         borderColor: UIColor? = .clear,
         borderWidth: CGFloat? = 0.0,
         icon: UIImage? = UIImage(named: "plus"),
+        rotation: Bool = true,
         completion: @escaping UIControlTargetClosure
     ) {
         self.init(frame: frame)
+        self.delegate = self
         // image
         setButtonImage()
         // colors
@@ -58,6 +61,8 @@ class FloatingActionButton: UIButton {
         self.buttonIcon = icon
         // Corner radius
         self.layer.cornerRadius = frame.height / 2
+        // button rotate
+        self.buttonRotate = rotation
         // shadow
         setShadow()
         addAction(for: .touchUpInside, closure: completion)
@@ -88,6 +93,23 @@ class FloatingActionButton: UIButton {
     private func rotateButton(angle: CGFloat) {
         UIView.animate(withDuration: 0.2) {
             self.transform = CGAffineTransform(rotationAngle: angle)
+        }
+    }
+}
+
+extension FloatingActionButton: FloatingActionButtonDelegate {
+    /// tapped button 
+    func didTapButton() {
+        if self.isSelected {
+            self.backgroundColor = accentColor
+            if buttonRotate == true {
+                rotateButton(angle: CGFloat.pi / 4)
+            }
+        } else {
+            self.backgroundColor = baseColor
+            if buttonRotate == true {
+                rotateButton(angle: 0)
+            }
         }
     }
 }
